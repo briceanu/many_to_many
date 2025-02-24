@@ -1,0 +1,30 @@
+python3 -m venv many_env
+source ./many_env/bin/activate
+pip install 'fastAPI[standard]' sqlalchemy pydantic
+pip freeze > requirements.txt
+
+
+
+2025-02-18 20:11:13,108 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2025-02-18 20:11:13,118 INFO sqlalchemy.engine.Engine SELECT anon_1.course_course_id AS anon_1_course_course_id, anon_1.course_price AS anon_1_course_price, anon_1.course_start_date AS anon_1_course_start_date, anon_1.course_subject AS anon_1_course_subject, student_1.student_id AS student_1_student_id, student_1.name AS student_1_name, student_1.email AS student_1_email, student_1.budget AS student_1_budget, student_1.date_of_birth AS student_1_date_of_birth 
+FROM (SELECT course.course_id AS course_course_id, course.price AS course_price, course.start_date AS course_start_date, course.subject AS course_subject 
+FROM course 
+WHERE course.course_id = ?
+ LIMIT ? OFFSET ?) AS anon_1 LEFT OUTER JOIN (student_course AS student_course_1 JOIN student AS student_1 ON student_1.student_id = student_course_1.student_id) ON anon_1.course_course_id = student_course_1.course_id
+2025-02-18 20:11:13,119 INFO sqlalchemy.engine.Engine [generated in 0.00049s] ('a29435c3143248058aa339dd099d43de', 1, 0)
+2025-02-18 20:11:13,121 INFO sqlalchemy.engine.Engine ROLLBACK
+
+
+
+
+2025-02-18 20:10:14,896 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2025-02-18 20:10:14,901 INFO sqlalchemy.engine.Engine SELECT course.course_id AS course_course_id, course.price AS course_price, course.start_date AS course_start_date, course.subject AS course_subject 
+FROM course 
+WHERE course.course_id = ?
+ LIMIT ? OFFSET ?
+2025-02-18 20:10:14,901 INFO sqlalchemy.engine.Engine [generated in 0.00034s] ('a29435c3143248058aa339dd099d43de', 1, 0)
+2025-02-18 20:10:14,911 INFO sqlalchemy.engine.Engine SELECT course_1.course_id AS course_1_course_id, student.student_id AS student_student_id, student.name AS student_name, student.email AS student_email, student.budget AS student_budget, student.date_of_birth AS student_date_of_birth 
+FROM course AS course_1 JOIN student_course AS student_course_1 ON course_1.course_id = student_course_1.course_id JOIN student ON student.student_id = student_course_1.student_id 
+WHERE course_1.course_id IN (?)
+2025-02-18 20:10:14,911 INFO sqlalchemy.engine.Engine [generated in 0.00053s] ('a29435c3143248058aa339dd099d43de',)
+2025-02-18 20:10:14,914 INFO sqlalchemy.engine.Engine ROLLBACK
